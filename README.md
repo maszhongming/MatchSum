@@ -5,6 +5,7 @@ Code for ACL 2020 paper: **Extractive Summarization as Text Matching**
 ## Dependencies
 - Python 3.7
 - [PyTorch](https://github.com/pytorch/pytorch) 1.4.0
+- [fastNLP](https://github.com/fastnlp/fastNLP) 0.5.0
 - [pyrouge](https://github.com/bheinzerling/pyrouge) 0.1.3
 	- You should fill your ROUGE path in metrics.py line 20 before running our code.
 - [rouge](https://github.com/pltrdy/rouge) 1.0.0
