@@ -8,7 +8,7 @@ from fastNLP.core.const import Const
 
 class MatchSumLoader(JsonLoader):
     
-    def __init__(self, candidate_num, encoder, max_len=200):
+    def __init__(self, candidate_num, encoder, max_len=180):
         fields = {'text_id': 'text_id',
              'candidate_id': 'candidate_id',
                'summary_id': 'summary_id'
