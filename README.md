@@ -1,5 +1,5 @@
 # MatchSum
-Code for ACL 2020 paper: **Extractive Summarization as Text Matching**
+Code for ACL 2020 paper: *[Extractive Summarization as Text Matching](https://arxiv.org/abs/2004.08795)*
 
 
 ## Dependencies
