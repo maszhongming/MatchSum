@@ -21,7 +21,7 @@ We have already processed CNN/DailyMail dataset, you can download it through [th
 
 ## Train
 
-We use eight Tesla-V100-16G GPUs to train our model, the training time is about 30 hours. If you do not have enough video memory, you can reduce the *batch_size* or *candidate_num* in *train_matching.py*, or you can adjust *max_len* in *dataloader.py*.
+We use eight Tesla-V100-16G GPUs to train our model, the training time is about 30 hours. If you do not have enough video memory, you can reduce the *batch_size* or *candidate_num* in `train_matching.py`, or you can adjust *max_len* in `dataloader.py`.
 
 You can choose BERT or RoBERTa as the encoder of **MatchSum**,  for example, to train a RoBERTa model, you can run the following command:
 
@@ -66,8 +66,9 @@ Then you can run the following command:
 python get_candidate.py --tokenizer=bert --data_path=/path/to/your_original_data.jsonl --index_path=/path/to/your_index.jsonl --write_path=/path/to/store_processed_data
 ```
 
-Please fill your ROUGE path in preprocess/get_candidate.py line 22 before running this command.
+Please fill your ROUGE path in `preprocess/get_candidate.py` line 22 before running this command. It is worth noting that you need to adjust the number of candidate summaries and the number of sentences in the candidate summaries according to your dataset. For details, see line 89-97 in `preprocess/get_candidate.py`.
 
+After processing the dataset, and before using our code to train your own model, please adjust *candidate_num* in `train_matching.py` and *max_len* in `dataloader.py` according to the number and the length of the candidate summaries in your dataset.
 
 ## Note
 
