@@ -21,14 +21,18 @@ class MatchSum(nn.Module):
         
         batch_size = text_id.size(0)
         
+        pad_id = 0     # for BERT
+        if text_id[0][0] == 0:
+            pad_id = 1 # for RoBERTa
+
         # get document embedding
-        input_mask = ~(text_id == 0)
+        input_mask = ~(text_id == pad_id)
         out = self.encoder(text_id, attention_mask=input_mask)[0] # last layer
         doc_emb = out[:, 0, :]
         assert doc_emb.size() == (batch_size, self.hidden_size) # [batch_size, hidden_size]
         
         # get summary embedding
-        input_mask = ~(summary_id == 0)
+        input_mask = ~(summary_id == pad_id)
         out = self.encoder(summary_id, attention_mask=input_mask)[0] # last layer
         summary_emb = out[:, 0, :]
         assert summary_emb.size() == (batch_size, self.hidden_size) # [batch_size, hidden_size]
@@ -39,7 +43,7 @@ class MatchSum(nn.Module):
         # get candidate embedding
         candidate_num = candidate_id.size(1)
         candidate_id = candidate_id.view(-1, candidate_id.size(-1))
-        input_mask = ~(candidate_id == 0)
+        input_mask = ~(candidate_id == pad_id)
         out = self.encoder(candidate_id, attention_mask=input_mask)[0]
         candidate_emb = out[:, 0, :].view(batch_size, candidate_num, self.hidden_size)  # [batch_size, candidate_num, hidden_size]
         assert candidate_emb.size() == (batch_size, candidate_num, self.hidden_size)

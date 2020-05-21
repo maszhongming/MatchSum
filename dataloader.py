@@ -17,7 +17,8 @@ class MatchSumLoader(JsonLoader):
         
         self.candidate_num = candidate_num
         self.max_len = max_len
-        
+        self.encoder = encoder
+
         if encoder == 'bert':
             self.sep_id = [102] # '[SEP]' (BERT)
         else:
@@ -62,9 +63,13 @@ class MatchSumLoader(JsonLoader):
             datasets[name].set_input('text_id', 'candidate_id', 'summary_id')
         
             # set padding value
-            datasets[name].set_pad_val('text_id', 0)
-            datasets[name].set_pad_val('candidate_id', 0)
-            datasets[name].set_pad_val('summary_id', 0)
+            if self.encoder == 'bert':
+                pad_id = 0
+            else:
+                pad_id = 1 # for RoBERTa
+            datasets[name].set_pad_val('text_id', pad_id)
+            datasets[name].set_pad_val('candidate_id', pad_id)
+            datasets[name].set_pad_val('summary_id', pad_id)
             
         print('Finished in {}'.format(timedelta(seconds=time()-start)))
 
