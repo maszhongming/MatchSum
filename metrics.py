@@ -37,7 +37,7 @@ class MarginRankingLoss(LossBase):
 
         # candidate loss
         n = score.size(1)
-        for i in range(1, n):
+        for i in range(1, n - 1):
             pos_score = score[:, :-i]
             neg_score = score[:, i:]
             pos_score = pos_score.contiguous().view(-1)
