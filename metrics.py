@@ -31,7 +31,7 @@ class MarginRankingLoss(LossBase):
         
         # equivalent to initializing TotalLoss to 0
         # here is to avoid that some special samples will not go into the following for loop
-        ones = torch.ones(score.size()).cuda()
+        ones = torch.ones(score.size()).cuda(score.device)
         loss_func = torch.nn.MarginRankingLoss(0.0)
         TotalLoss = loss_func(score, score, ones)
 
