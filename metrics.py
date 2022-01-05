@@ -17,7 +17,7 @@ from rouge import Rouge
 from fastNLP.core.losses import LossBase
 from fastNLP.core.metrics import MetricBase
 
-_ROUGE_PATH = '/path/to/RELEASE-1.5.5'
+_ROUGE_PATH = '/home/students/s121md102_06/pyrouge/rouge/tools/ROUGE-1.5.5'
 
 class MarginRankingLoss(LossBase):      
     
