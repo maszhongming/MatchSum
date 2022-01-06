@@ -19,7 +19,7 @@ from transformers import BertTokenizer, RobertaTokenizer
 
 MAX_LEN = 512
 
-_ROUGE_PATH = '/path/to/RELEASE-1.5.5'
+_ROUGE_PATH = '/home/students/s121md102_06/apps/pyrouge/rouge/tools/ROUGE-1.5.5'
 temp_path = './temp' # path to store some temporary files
 
 original_data, sent_ids = [], []
@@ -28,7 +28,8 @@ def load_jsonl(data_path):
     data = []
     with open(data_path) as f:
         for line in f:
-            data.append(json.loads(line))
+            if line != "\n":
+                data.append(json.loads(line))
     return data
 
 def get_rouge(path, dec):
@@ -216,7 +217,7 @@ if __name__ == '__main__':
         help='path to store the processed dataset')
 
     args = parser.parse_args()
-    assert args.tokenizer in ['bert', 'roberta']
+    assert args.tokenizer in ['bert', 'roberta', 'distilbert']
     assert exists(args.data_path)
     assert exists(args.index_path)
 
