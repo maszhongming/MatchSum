@@ -56,6 +56,7 @@ def train_model(args):
     print(devices)
 
     # configure model
+    torch.cuda.empty_cache()
     model = MatchSum(args.candidate_num, args.encoder)
     optimizer = Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=0)
     
@@ -76,6 +77,7 @@ def train_model(args):
     
     print('Start training with the following hyper-parameters:')
     print(train_params)
+    torch.cuda.empty_cache()
     trainer.train()
 
 
@@ -92,7 +94,6 @@ def test_model(args):
     
     # need 1 gpu for testing
     device = int(args.gpus)
-    
     args.batch_size = 1
 
     for cur_model in models:
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpus', required=True,
                         help='available gpus for training(separated by commas)', type=str)
     parser.add_argument('--encoder', required=True,
-                        help='the encoder for matchsum (bert/roberta)', type=str)
+                        help='the encoder for matchsum (bert/distilbert/roberta)', type=str)  # Modified and added distilbert option in help line
 
     parser.add_argument('--batch_size', default=16,
                         help='the training batch size', type=int)

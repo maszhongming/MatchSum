@@ -15,7 +15,7 @@ from cytoolz import curry
 from pyrouge.utils import log
 from pyrouge import Rouge155
 
-from transformers import BertTokenizer, RobertaTokenizer
+from transformers import BertTokenizer, RobertaTokenizer, DistilBertTokenizer
 
 MAX_LEN = 512
 
@@ -167,6 +167,9 @@ def get_candidates_mp(args):
     if args.tokenizer == 'bert':
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         cls, sep = '[CLS]', '[SEP]'
+    elif args.tokenizer == 'distilbert':
+        tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+        cls, sep = '[CLS]', '[SEP]'
     else:
         tokenizer = RobertaTokenizer.from_pretrained('roberta-base')
         cls, sep = '<s>', '</s>'
@@ -208,7 +211,7 @@ if __name__ == '__main__':
         description='Process truncated documents to obtain candidate summaries'
     )
     parser.add_argument('--tokenizer', type=str, required=True,
-        help='BERT/RoBERTa')
+        help='BERT/RoBERTa/distilbert')
     parser.add_argument('--data_path', type=str, required=True,
         help='path to the original dataset, the original dataset should contain text and summary')
     parser.add_argument('--index_path', type=str, required=True,

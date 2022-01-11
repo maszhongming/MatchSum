@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.nn import init
 
-from transformers import BertModel, RobertaModel
+from transformers import BertModel, RobertaModel, DistilBertModel
 
 class MatchSum(nn.Module):
     
@@ -14,6 +14,10 @@ class MatchSum(nn.Module):
         
         if encoder == 'bert':
             self.encoder = BertModel.from_pretrained('bert-base-uncased')
+        # Modify with Distilbert
+        elif encoder == 'distilbert':
+            self.encoder = DistilBertModel.from_pretrained('distilbert-base-uncased')
+        # End Modification
         else:
             self.encoder = RobertaModel.from_pretrained('roberta-base')
 
@@ -40,6 +44,7 @@ class MatchSum(nn.Module):
         # get summary score
         summary_score = torch.cosine_similarity(summary_emb, doc_emb, dim=-1)
 
+        torch.cuda.empty_cache()
         # get candidate embedding
         candidate_num = candidate_id.size(1)
         candidate_id = candidate_id.view(-1, candidate_id.size(-1))
